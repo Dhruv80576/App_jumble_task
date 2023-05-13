@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.util.ArrayList;
@@ -28,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
     String word;
     String clue;
     int homeScore=0;
-
+    int column_size;
+    int row_size;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +49,12 @@ public class MainActivity extends AppCompatActivity {
             textView.setText(String.valueOf(homeScore));
         }
         Button start=(Button) findViewById(R.id.start_home);
-
         EditText word_box=(EditText) findViewById(R.id.edittext_word);
         EditText clue_box=(EditText) findViewById(R.id.edittext_clue);
         ImageView setting=(ImageView) findViewById(R.id.setting_main);
+        SharedPreferences sharedPreferences1=getSharedPreferences("Setting",0);
+        column_size=sharedPreferences1.getInt("Column",4);
+        row_size=sharedPreferences1.getInt("Row",4);
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,10 +78,15 @@ public class MainActivity extends AppCompatActivity {
                     clue_box.setError("Clue field cannot be null");
                 }
                 else{
-                    Intent intent=new Intent(MainActivity.this,Quiz_Screen.class);
-                    intent.putExtra("Word",word);
-                    intent.putExtra("Clue",clue);
-                    startActivity(intent);
+                    if(word.length()>column_size*row_size){
+                        Toast.makeText(MainActivity.this, "Reduce length of word", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Intent intent=new Intent(MainActivity.this,Quiz_Screen.class);
+                        intent.putExtra("Word",word);
+                        intent.putExtra("Clue",clue);
+                        startActivity(intent);
+                    }
                 }
             }
         });

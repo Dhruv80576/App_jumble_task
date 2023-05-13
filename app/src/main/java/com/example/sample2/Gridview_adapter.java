@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Gridview_adapter extends ArrayAdapter<Character> {
+
     ArrayList<Character> arrayList=new ArrayList<>();
     public Gridview_adapter(@NonNull Context context,ArrayList<Character> arrayList) {
         super(context, 0,arrayList);
@@ -38,12 +39,13 @@ public class Gridview_adapter extends ArrayAdapter<Character> {
         else {
             holderview=(Holderview) convertView.getTag();
         }
-
         holderview.textview.setText(String.valueOf(arrayList.get(position)));
         Random random=new Random();
         holderview.textview.setBackgroundColor(Color.argb(100,random.nextInt(255),random.nextInt(255),random.nextInt(255)));
+
         return convertView;
     }
+
 
     @Override
     public int getCount() {

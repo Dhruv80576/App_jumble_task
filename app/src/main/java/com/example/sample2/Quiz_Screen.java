@@ -1,11 +1,11 @@
 package com.example.sample2;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -45,14 +46,24 @@ public class Quiz_Screen extends AppCompatActivity {
     int click_gridview=0;
     EditText answr_edittext;
     GridView gridView;
+    boolean[] gridview_touch;
+    int column_size;
+    int row_size;
+    int grid_lenght;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_screen);
-         intent= getIntent();
+        intent= getIntent();
         clue = intent.getStringExtra("Clue");
         word = intent.getStringExtra("Word");
+        SharedPreferences sharedPreferences1=getSharedPreferences("Setting",0);
+        column_size=sharedPreferences1.getInt("Column",4);
+        row_size=sharedPreferences1.getInt("Row",4);
+        grid_lenght=column_size*row_size;
+        gridview_touch=new boolean[grid_lenght];
         gridView = (GridView) findViewById(R.id.gridview_letter);
+        gridView.setNumColumns(column_size);
         ImageView imageView = (ImageView) findViewById(R.id.hint_information_button);
         check = (Button) findViewById(R.id.check_button);
         reset=(Button)findViewById(R.id.reset_button);
@@ -61,6 +72,12 @@ public class Quiz_Screen extends AppCompatActivity {
         life2=(ImageView) findViewById(R.id.life2_heart);
         life3=(ImageView) findViewById(R.id.life3_heart);
         life=3;
+        answr_edittext.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,6 +88,10 @@ public class Quiz_Screen extends AppCompatActivity {
                                      @Override
                                      public void onClick(View v) {
                                          vibrate();
+
+                                         for(int i=0;i<grid_lenght;i++){
+                                             gridview_touch[i]=false;
+                                         }
                                          if(result.charAt(result.length()-1)!='_'){
                                              if(word.equals(result)){
                                                  Toast.makeText(Quiz_Screen.this, "Correct", Toast.LENGTH_SHORT).show();
@@ -98,11 +119,16 @@ public class Quiz_Screen extends AppCompatActivity {
             public void onClick(View v) {
                 vibrate();
                 result="";
+                for(int i=0;i<grid_lenght;i++){
+                    gridview_touch[i]=false;
+                }
                 for(int i=0;i<word.length();i++){
                     click_gridview=0;
                     result+="_";
                     answr_edittext.setText(result);
                 }
+                Gridview_adapter gridview_adapter=new Gridview_adapter(Quiz_Screen.this,letters);
+                gridView.setAdapter(gridview_adapter);
             }
         });
         for(int i=0;i<word.length();i++){
@@ -112,7 +138,7 @@ public class Quiz_Screen extends AppCompatActivity {
         for (int i = 0; i < word.length(); i++) {
             letters.add(word.charAt(i));
         }
-        while (letters.size() < 16) {
+        while (letters.size() < grid_lenght) {
             int succs = 1;
             char temp = generate_letter();
             for (int j = 0; j < letters.size(); j++) {
@@ -133,12 +159,18 @@ public class Quiz_Screen extends AppCompatActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (result.charAt(result.length()-1)=='_'){
-                    vibrate();
-                    click_gridview+=1;
-                    result=result.substring(0,click_gridview-1)+letters.get(position)+result.substring(click_gridview);
-                    answr_edittext.setText(result);
+                if(gridview_touch[position]==false){
+                    if (result.charAt(result.length()-1)=='_'){
+                        view=gridView.getChildAt(position);
+                        view.setBackgroundColor(Color.TRANSPARENT);
+                        vibrate();
+                        click_gridview+=1;
+                        result=result.substring(0,click_gridview-1)+letters.get(position)+result.substring(click_gridview);
+                        answr_edittext.setText(result);
+                        gridview_touch[position]=true;
+                    }
                 }
+
             }
         });
     }
@@ -252,7 +284,7 @@ public class Quiz_Screen extends AppCompatActivity {
         ArrayList<Character> new_list=new ArrayList<>();
         while(new_list.size()!=arrayList.size()){
             Random random=new Random();
-            int temp=random.nextInt(16);
+            int temp=random.nextInt(grid_lenght);
             if(arrayList.get(temp)!='0'){
                 new_list.add(arrayList.get(temp));
                 arrayList.set(temp,'0');

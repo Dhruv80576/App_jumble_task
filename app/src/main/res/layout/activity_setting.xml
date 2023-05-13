@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Setting_activity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/home_color">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,6 +21,7 @@
         android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="25dp"
+
         />
     <TextView
         android:layout_width="100dp"
@@ -26,54 +32,81 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_marginTop="20dp"
-        android:layout_height="wrap_content">
-
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
         <TextView
-            android:id="@+id/gridesize_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="4 X 4"
-            android:textColor="@color/black"
-            android:background="@drawable/gridview_size_textview"
-            android:layout_marginStart="30dp"
-            android:paddingStart="30dp"
-            android:paddingEnd="30dp"
+            android:text="Number of Columns"
+            android:background="@drawable/textview_shape"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:textStyle="bold"
-            android:textSize="18dp"
-            />
-        <TextView
-            android:id="@+id/gridsize_5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="5 X 5"
+            android:textSize="15dp"
             android:textColor="@color/black"
-            android:background="@drawable/gridview_size_textview"
             android:layout_marginStart="20dp"
-            android:paddingStart="30dp"
-            android:textStyle="bold"
-            android:textSize="18dp"
 
-            android:paddingEnd="30dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
             />
+        <EditText
+            android:id="@+id/editxt_column"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Must be greater than 2 and less than 7"
+            android:background="@drawable/edittextview_shape"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="50dp"
+            android:textColor="@color/black"
+            android:inputType="number"
+            android:paddingTop="10dp"
+            android:paddingStart="10dp"
+            android:paddingBottom="10dp"
+            android:paddingEnd="10dp"
+            android:digits="234567" />
         <TextView
-            android:id="@+id/gridsize_6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="6 X 6"
-            android:textColor="@color/black"
-            android:background="@drawable/gridview_size_textview"
-            android:layout_marginStart="20dp"
-            android:paddingStart="30dp"
-            android:textStyle="bold"
-            android:textSize="18dp"
-
-            android:paddingEnd="30dp"
+            android:text="Number of Rows"
+            android:background="@drawable/textview_shape"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
+            android:textSize="15dp"
+            android:textColor="@color/black"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+
             />
+        <EditText
+            android:id="@+id/editxt_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="50dp"
+            android:background="@drawable/edittextview_shape"
+            android:layout_marginStart="15dp"
+            android:textColor="@color/black"
+            android:inputType="number"
+            android:paddingTop="10dp"
+            android:paddingStart="10dp"
+            android:paddingBottom="10dp"
+            android:paddingEnd="10dp"
+            android:digits="234567" />
     </LinearLayout>
-</LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/apply_setting_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="30dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="Apply"
+        android:textSize="20dp"
+
+        app:cornerRadius="20dp"
+        app:strokeColor="#FFE55C"
+        app:strokeWidth="3dp" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

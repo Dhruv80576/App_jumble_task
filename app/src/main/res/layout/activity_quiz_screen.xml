@@ -69,6 +69,7 @@
             android:textColor="@color/white"
             android:background="@drawable/edittext_main_answr"
             android:textSize="40dp"
+
             android:text="CHAIR"/>
         <GridView
             android:layout_width="wrap_content"
