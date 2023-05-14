@@ -139,19 +139,8 @@ public class Quiz_Screen extends AppCompatActivity {
             letters.add(word.charAt(i));
         }
         while (letters.size() < grid_lenght) {
-            int succs = 1;
             char temp = generate_letter();
-            for (int j = 0; j < letters.size(); j++) {
-                if (temp == letters.get(j)) {
-                    succs = 0;
-                    break;
-                } else {
-                    succs = 1;
-                }
-            }
-            if (succs == 1) {
-                letters.add(temp);
-            }
+            letters.add(temp);
         }
         letters=reshuffle_grid(letters);
         Gridview_adapter gridview_adapter=new Gridview_adapter(Quiz_Screen.this,letters);
@@ -161,8 +150,8 @@ public class Quiz_Screen extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(gridview_touch[position]==false){
                     if (result.charAt(result.length()-1)=='_'){
-                        view=gridView.getChildAt(position);
-                        view.setBackgroundColor(Color.TRANSPARENT);
+                        View v=parent.getChildAt(position);
+                        v.findViewById(R.id.letters_main).setBackgroundColor(Color.WHITE);
                         vibrate();
                         click_gridview+=1;
                         result=result.substring(0,click_gridview-1)+letters.get(position)+result.substring(click_gridview);
@@ -170,7 +159,6 @@ public class Quiz_Screen extends AppCompatActivity {
                         gridview_touch[position]=true;
                     }
                 }
-
             }
         });
     }
