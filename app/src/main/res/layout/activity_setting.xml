@@ -7,6 +7,7 @@
     tools:context=".Setting_activity"
     android:orientation="vertical"
     android:background="@drawable/home_color">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -124,6 +124,4 @@
         app:strokeColor="#7DF9FF"
         app:strokeWidth="3dp" />
 
-
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

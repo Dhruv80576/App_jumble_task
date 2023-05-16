@@ -32,7 +32,6 @@ public class Setting_activity extends AppCompatActivity {
         apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 num_colums= Integer.parseInt(column.getText().toString());
                 num_rows= Integer.parseInt(row.getText().toString());
                 System.out.println(num_colums+" "+num_rows);
